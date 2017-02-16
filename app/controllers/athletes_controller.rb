@@ -29,7 +29,7 @@ class AthletesController < ApplicationController
   # PATCH/PUT /athletes/1
   def update
     if @athlete.update(athlete_params)
-      render json: @athlete
+      head :no_content
     else
       render json: @athlete.errors, status: :unprocessable_entity
     end

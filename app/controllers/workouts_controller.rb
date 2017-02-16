@@ -29,7 +29,7 @@ class WorkoutsController < ApplicationController
   # PATCH/PUT /workouts/1
   def update
     if @workout.update(workout_params)
-      render json: @workout
+      head :no_content
     else
       render json: @workout.errors, status: :unprocessable_entity
     end
