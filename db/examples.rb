@@ -17,23 +17,41 @@
 #                password: 'abc123',
 #                password_confirmation: nil)
 # end
-# Athlete.transaction do
-#   %w(lauren maddie jeff max alec kate brian gary anna).each do |name|
-#     athlete_params = {
-#       given_name: name,
-#       family_name: 'Tufts'
-#     }
-#     next if Athlete.exists? athlete_params
-#     Athlete.create! athlete_params
-#   end
-# end
-#
-# Workout.transaction do
-#   %w(2017-01-08 2017-01-013 2017-01-18 2017-01-20 2017-01-24).each do |date|
-#     workout_params = {
-#       date: date
-#     }
-#     next if Workout.exists? workout_params
-#     Workout.create! workout_params
-#   end
-# end
+
+Athlete.transaction do
+  %w(lauren maddie jeff max alec kate brian gary anna).each do |name|
+    athlete_params = {
+      given_name: name,
+      surname: 'Tufts',
+      date_of_birth: '1993-01-16'
+    }
+    next if Athlete.exists? athlete_params
+    Athlete.create! athlete_params
+  end
+end
+
+Workout.transaction do
+  %w(2kBenchmark 3668Benchmark 5kSS 10kSS 2500SS).each do |name|
+    workout_params = {
+      name: name
+    }
+    next if Workout.exists? workout_params
+    Workout.create! workout_params
+  end
+end
+
+Log.transaction do
+  require 'date'
+  date_time = DateTime.now
+
+  20.times do
+    log_params = {
+      workout: Workout.all.sample,
+      athlete: Athlete.all.sample,
+      date_completed: date_time
+    }
+
+    next if Log.exists? log_params
+    Log.create!(log_params)
+  end
+end
