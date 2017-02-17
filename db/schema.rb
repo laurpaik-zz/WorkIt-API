@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170215213719) do
   end
 
   create_table "workouts", force: :cascade do |t|
-    t.date     "date",       null: false
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
