@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215213719) do
+ActiveRecord::Schema.define(version: 20170217140857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 20170215213719) do
     t.index ["user_id"], name: "index_examples_on_user_id", using: :btree
   end
 
+  create_table "logs", force: :cascade do |t|
+    t.integer  "athlete_id",     null: false
+    t.integer  "workout_id",     null: false
+    t.date     "date_completed", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["athlete_id"], name: "index_logs_on_athlete_id", using: :btree
+    t.index ["workout_id"], name: "index_logs_on_workout_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false
     t.string   "token",           null: false
@@ -48,4 +58,6 @@ ActiveRecord::Schema.define(version: 20170215213719) do
   end
 
   add_foreign_key "examples", "users"
+  add_foreign_key "logs", "athletes"
+  add_foreign_key "logs", "workouts"
 end
