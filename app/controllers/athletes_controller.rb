@@ -17,7 +17,7 @@ class AthletesController < ApplicationController
 
   # POST /athletes
   def create
-    @athlete = Athlete.new(athlete_params)
+    @athlete = current_user.athletes.new(athlete_params)
 
     if @athlete.save
       render json: @athlete, status: :created
@@ -48,7 +48,8 @@ class AthletesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def athlete_params
-    params.require(:athlete).permit(:given_name, :surname, :date_of_birth)
+    params.require(:athlete).permit(:given_name, :surname,
+                                    :date_of_birth, :user_id)
   end
   private :athlete_params
 end
