@@ -17,3 +17,23 @@
 #                password: 'abc123',
 #                password_confirmation: nil)
 # end
+# Athlete.transaction do
+#   %w(lauren maddie jeff max alec kate brian gary anna).each do |name|
+#     athlete_params = {
+#       given_name: name,
+#       family_name: 'Tufts'
+#     }
+#     next if Athlete.exists? athlete_params
+#     Athlete.create! athlete_params
+#   end
+# end
+#
+# Workout.transaction do
+#   %w(2017-01-08 2017-01-013 2017-01-18 2017-01-20 2017-01-24).each do |date|
+#     workout_params = {
+#       date: date
+#     }
+#     next if Workout.exists? workout_params
+#     Workout.create! workout_params
+#   end
+# end
