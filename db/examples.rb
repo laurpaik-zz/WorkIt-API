@@ -10,17 +10,22 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# %w(antony jeff matt jason).each do |name|
-#   email = "#{name}@#{name}.com"
-#   next if User.exists? email: email
-#   User.create!(email: email,
-#                password: 'abc123',
-#                password_confirmation: nil)
-# end
+User.transaction do
+  %w(lauren maddie jeff max alec kate brian gary anna).each do |name|
+    email = "#{name}@#{name}.com"
+    next if User.exists? email: email
+    User.create(email: email,
+                password: 'abc123',
+                password_confirmation: 'abc123')
+  end
+end
 
 Athlete.transaction do
   %w(lauren maddie jeff max alec kate brian gary anna).each do |name|
+    email = "#{name}@#{name}.com"
+    user = User.where(email: email).first
     athlete_params = {
+      user_id: user.id,
       given_name: name,
       surname: 'Tufts',
       date_of_birth: '1993-01-16'
