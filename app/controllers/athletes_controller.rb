@@ -17,7 +17,7 @@ class AthletesController < OpenReadController
 
   # POST /athletes
   def create
-    @athlete = current_user.athletes.build(athlete_params)
+    @athlete = current_user.build_athlete(athlete_params)
 
     if @athlete.save
       render json: @athlete, status: :created
