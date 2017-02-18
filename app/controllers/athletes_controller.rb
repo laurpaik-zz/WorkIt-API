@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class AthletesController < ApplicationController
-  before_action :set_athlete, only: [:show, :update, :destroy]
+class AthletesController < OpenReadController
+  before_action :set_athlete, only: [:update, :destroy]
 
   # GET /athletes
   def index
@@ -12,12 +12,12 @@ class AthletesController < ApplicationController
 
   # GET /athletes/1
   def show
-    render json: @athlete
+    render json: Athlete.find(params[:id])
   end
 
   # POST /athletes
   def create
-    @athlete = current_user.athletes.new(athlete_params)
+    @athlete = current_user.athletes.build(athlete_params)
 
     if @athlete.save
       render json: @athlete, status: :created
@@ -42,14 +42,14 @@ class AthletesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_athlete
-    @athlete = Athlete.find(params[:id])
+    @athlete = current_user.athletes.find(params[:id])
   end
   private :set_athlete
 
   # Only allow a trusted parameter "white list" through.
   def athlete_params
     params.require(:athlete).permit(:given_name, :surname,
-                                    :date_of_birth, :user_id)
+                                    :date_of_birth)
   end
   private :athlete_params
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class LogsController < ApplicationController
-  before_action :set_log, only: [:show, :update, :destroy]
+class LogsController < OpenReadController
+  before_action :set_log, only: [:update, :destroy]
 
   # GET /logs
   def index
@@ -12,12 +12,12 @@ class LogsController < ApplicationController
 
   # GET /logs/1
   def show
-    render json: @log
+    render json: Log.find(params[:id])
   end
 
   # POST /logs
   def create
-    @log = Log.new(log_params)
+    @log = current_user.logs.build(log_params)
 
     if @log.save
       render json: @log, status: :created
@@ -44,7 +44,7 @@ class LogsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_log
-    @log = Log.find(params[:id])
+    @log = current_user.logs.find(params[:id])
   end
   private :set_log
 

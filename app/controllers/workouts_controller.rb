@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class WorkoutsController < ApplicationController
-  before_action :set_workout, only: [:show, :update, :destroy]
+class WorkoutsController < OpenReadController
+  before_action :set_workout, only: [:update, :destroy]
 
   # GET /workouts
   def index
@@ -12,12 +12,12 @@ class WorkoutsController < ApplicationController
 
   # GET /workouts/1
   def show
-    render json: @workout
+    render json: Workout.find(params[:id])
   end
 
   # POST /workouts
   def create
-    @workout = Workout.new(workout_params)
+    @workout = current_user.workouts.build(workout_params)
 
     if @workout.save
       render json: @workout, status: :created
@@ -44,7 +44,7 @@ class WorkoutsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_workout
-    @workout = Workout.find(params[:id])
+    @workout = current_user.workouts.find(params[:id])
   end
   private :set_workout
 
