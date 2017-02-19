@@ -9,10 +9,11 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Token token=$TOKEN" \
   --data '{
     "athlete": {
-      "given_name": "'"${GIVEN_NAME}"'"
+      "given_name": "'"${GIVEN_NAME}"'",
+      "surname": "'"${SURNAME}"'",
+      "date_of_birth": "'"${DOB}"'"
     }
   }'
-
    #\
   # --header "Authorization: Token token=$TOKEN"
 
