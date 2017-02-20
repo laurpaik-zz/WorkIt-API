@@ -50,7 +50,7 @@ class LogsController < OpenReadController
 
   # Only allow a trusted parameter "white list" through.
   def log_params
-    params.require(:log).permit(:athlete_id, :workout_id, :date_completed)
+    params.require(:log).permit(:date_completed, :workout_id, :athlete_id)
   end
   private :log_params
 end
