@@ -5,7 +5,7 @@ class LogsController < OpenReadController
 
   # GET /logs
   def index
-    @logs = Log.all
+    @logs = Log.order(date_completed: :asc)
 
     render json: @logs
   end
