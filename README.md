@@ -10,6 +10,21 @@ An API to store workout data and allow athletes to register as users and record 
 | POST   | `/sign-in`             | `users#signin`    |
 | PATCH  | `/change-password/:id` | `users#changepw`  |
 | DELETE | `/sign-out/:id`        | `users#signout`   |
+| POST   | `/athletes`             | `athletes#signup`    |
+| PATCH  | `/athletes/:id` | `athletes#update`  |
+| GET | `/athletes/:id`        | `athletes#show`   |
+| GET   | `/athletes`             | `athletes#index`    |
+| DELETE   | `/athletes/:id`             | `athletes#destroy`    |
+| POST  | `/logs` | `logs#create`  |
+| GET | `/logs`        | `logs#index`   |
+| GET   | `/logs/:id`             | `logs#show`    |
+| PATCH   | `/logs/:id`             | `logs#update`    |
+| DELETE  | `/logs/:id` | `logs#destroy`  |
+| POST  | `/workouts` | `workouts#create`  |
+| GET | `/workouts`        | `workouts#index`   |
+| GET   | `/workouts/:id`             | `workouts#show`    |
+| PATCH   | `/workouts/:id`             | `workouts#update`    |
+| DELETE  | `/workouts/:id` | `workouts#destroy`  |
 
 #### POST /sign-up
 
