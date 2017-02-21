@@ -16,15 +16,15 @@ class AthletesController < OpenReadController
   end
 
   # POST /athletes
-  def create
-    @athlete = current_user.build_athlete(athlete_params)
-
-    if @athlete.save
-      render json: @athlete, status: :created
-    else
-      render json: @athlete.errors, status: :unprocessable_entity
-    end
-  end
+  # def create
+  #   @athlete = current_user.build_athlete(athlete_params)
+  #
+  #   if @athlete.save
+  #     render json: @athlete, status: :created
+  #   else
+  #     render json: @athlete.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /athletes/1
   def update
