@@ -1,8 +1,8 @@
-## A Workout data store API
+# A Workout data store API
 
 An API to store workout data and allow athletes to register as users and record their workout history.
 
-### Authentication
+## API End-Points
 
 | Verb   | URI Pattern            | Controller#Action |
 |--------|------------------------|-------------------|
@@ -25,6 +25,10 @@ An API to store workout data and allow athletes to register as users and record 
 | GET   | `/workouts/:id`             | `workouts#show`    |
 | PATCH   | `/workouts/:id`             | `workouts#update`    |
 | DELETE  | `/workouts/:id` | `workouts#destroy`  |
+
+---
+
+### User Actions
 
 #### POST /sign-up
 
@@ -214,7 +218,37 @@ Content-Type: application/json; charset=utf-8
 }
 ```
 
-### Logging actions
+### Athlete actions
+
+All athlete action requests must include a valid HTTP header `Authorization: Token token=<token>` or they will be rejected with a status of 401 Unauthorized.
+
+#### index
+
+The `index` action is a *GET* that retrieves all athletes.
+The response body will contain JSON containing an array of athlete-profiles, e.g.:
+```json
+{
+  "athletes": [
+    {
+      "id": 1,
+      "given_name": "Lauren",
+      "surname": "McFace",
+      "date_of_birth": "1990-01-01",
+      "workouts": [1, 3, 8],
+      "editable": false
+    },
+    {
+      "id": 2,
+      "given_name": "Maddie",
+      "surname": "McFace",
+      "date_of_birth": "1990-01-02",
+      "workouts": [1, 7],
+      "editable": false
+    },
+  ]
+}
+```
+If a `user` is logged in, then `index` will return `editable` as true for that user's athlete.
 
 
 ## [License](LICENSE)
