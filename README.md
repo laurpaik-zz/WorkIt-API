@@ -357,6 +357,7 @@ The response body will contain JSON containing an array of the current user's lo
     }
   ]
 }
+```
 
 #### update
 
@@ -375,6 +376,8 @@ If the request is successful, the response will have an HTTP status of 204 No Co
 If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
 
 ### Workout Actions
+
+For the time being, Workout will be treated as a resource database. Users can choose from the workouts provided to create logs. The `index` action request is so users can know which ids go with which workouts for when they create a log. Later down the line I would like to create an admin/"coach" model that can create workouts.
 
 #### index
 
