@@ -314,6 +314,50 @@ The response body will contain JSON containing an array of logged workouts, e.g.
 ```
 If a `user` is logged in, then `index` will return `editable` as true for that user's athlete.
 
+#### show
+
+The `show` action is a *GET* that retrieves all logs created by the current user.
+The response body will contain JSON containing an array of the current user's logged workouts, e.g.:
+```json
+{
+  "logs":[
+    {
+      "id":16,
+      "date_completed":"2017-02-22",
+      "workout":{
+        "id":10,
+        "name":"Anaerobic2500",
+        "athletes":[1,2,3,8]
+      },
+      "athlete":{
+        "id":1,
+        "given_name":"Lauren",
+        "surname":"Tufts",
+        "date_of_birth":"1993-01-16",
+        "workouts":[4,10,13],
+        "editable":true
+      }
+    },
+    {
+      "id":11,
+      "date_completed":"2017-02-22",
+      "workout":{
+        "id":4,
+        "name":"Benchmark500Dash",
+        "athletes":[1]
+      },
+      "athlete":{
+        "id":1,
+        "given_name":"Lauren",
+        "surname":"Tufts",
+        "date_of_birth":"1993-01-16"
+        ,"workouts":[4,10,13],
+        "editable":true
+      }
+    }
+  ]
+}
+
 #### update
 
 The `update` action is a *PATCH* that updates a logged workout for a user who has authorization. It expects a PATCH of `log` specifying `date_completed` and `workout_id`. The user's id number automatically is assigned to `athlete_id`.
