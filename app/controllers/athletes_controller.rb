@@ -14,7 +14,7 @@ class AthletesController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_athlete
-    @athlete = Athlete.where(id: params[:id], user: current_user).take
+    @athlete = Athlete.find_by(id: params[:id], user: current_user)
   end
   private :set_athlete
 
