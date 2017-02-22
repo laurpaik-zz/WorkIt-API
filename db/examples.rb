@@ -38,7 +38,8 @@ end
 Workout.transaction do
   %w(Benchmark2k Benchmark5k Benchmark3663 Benchmark500Dash SteadyState10k
      SteadyState6k SteadyState5k SteadyState2k SteadyState3663 Anaerobic2500
-     Anaerobic1221 Anaerobic1000 Sprint500 Sprint1000).each do |name|
+     Anaerobic1221 Anaerobic1000 Sprint500 Sprint1000
+     OtherWorkout).each do |name|
     workout_params = {
       name: name
     }
