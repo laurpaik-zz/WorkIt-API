@@ -5,7 +5,7 @@ class LogsController < OpenReadController
 
   # GET /logs
   def index
-    @logs = Log.order(date_completed: :desc)
+    @logs = Log.order(date_completed: :desc, id: :desc)
 
     render json: @logs
   end
@@ -14,6 +14,7 @@ class LogsController < OpenReadController
   def show
     # render json: Log.find(params[:id])
     @logs = Log.where(athlete_id: current_user.id)
+               .order(date_completed: :desc, id: :desc)
     render json: @logs
   end
 
