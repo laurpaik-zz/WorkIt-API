@@ -11,19 +11,13 @@ An API to store workout data and allow athletes to register as users and record 
 | PATCH  | `/change-password/:id` | `users#changepw`  |
 | DELETE | `/sign-out/:id`        | `users#signout`   |
 | PATCH  | `/athletes/:id` | `athletes#update`  |
-| GET | `/athletes/:id`        | `athletes#show`   |
-| GET   | `/athletes`             | `athletes#index`    |
-| DELETE   | `/athletes/:id`             | `athletes#destroy`    |
 | POST  | `/logs` | `logs#create`  |
 | GET | `/logs`        | `logs#index`   |
 | GET   | `/logs/:id`             | `logs#show`    |
 | PATCH   | `/logs/:id`             | `logs#update`    |
 | DELETE  | `/logs/:id` | `logs#destroy`  |
-| POST  | `/workouts` | `workouts#create`  |
 | GET | `/workouts`        | `workouts#index`   |
 | GET   | `/workouts/:id`             | `workouts#show`    |
-| PATCH   | `/workouts/:id`             | `workouts#update`    |
-| DELETE  | `/workouts/:id` | `workouts#destroy`  |
 
 ---
 
@@ -238,34 +232,103 @@ Content-Type: application/json; charset=utf-8
 
 All athlete action requests must include a valid HTTP header `Authorization: Token token=<token>` or they will be rejected with a status of 401 Unauthorized.
 
-#### index
+#### update
 
-The `index` action is a *GET* that retrieves all athletes.
-The response body will contain JSON containing an array of athlete-profiles, e.g.:
+The `update` action is a *PATCH* that updates the athlete who has authorization. It expects a PATCH of `athlete` specifying `given_name`, `surname`, and `date_of_birth`.
+
+If the request is successful, the response will have an HTTP status of 204 No Content.
+
+If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
+
+### Log actions
+
+All log action requests except `index` must include a valid HTTP header `Authorization: Token token=<token` or they will be rejected with a status of 401 Unauthorized.
+
+#### create
+
+The `create` action is a *POST* that creates a new log for the user signed in. It expects a POST of `log` specifying `date_completed` and `workout_id`. The user's id number automatically is assigned to `athlete_id`, as the two id numbers will be the same (see `signup`).
+The response will have an HTTP status of 201 Created, and the body will contain JSON of the created log:
 ```json
 {
-  "athletes": [
+  "id":7,
+  "date_completed":"2017-02-21",
+  "workout":{
+    "id":1,
+    "name":"Benchmark2k",
+    "athletes":[3,9],
+  },
+  "athlete":{
+    "id":3,
+    "given_name":"Jeff",
+    "surname":"Tufts",
+    "date_of_birth":"1993-01-16",
+    "workouts":[1, 2,3,10,13],
+    "editable":true,
+  }
+}
+```
+
+#### index
+
+The `index` action is a *GET* that retrieves all logs.
+The response body will contain JSON containing an array of logged workouts, e.g.:
+```json
+{
+  "logs": [
     {
-      "id": 1,
-      "given_name": "Lauren",
-      "surname": "McFace",
-      "date_of_birth": "1990-01-01",
-      "workouts": [1, 3, 8],
-      "editable": false
+      "id":1,
+      "date_completed":"2017-02-22",
+      "workout":{
+        "id":3,
+        "name":"Benchmark3663",
+        "athletes":[3,9],
+      },
+      "athlete":{
+        "id":3,
+        "given_name":"Jeff",
+        "surname":"Tufts",
+        "date_of_birth":"1993-01-16",
+        "workouts":[2,3,10,13],
+        "editable":false,
+      },
     },
     {
-      "id": 2,
-      "given_name": "Maddie",
-      "surname": "McFace",
-      "date_of_birth": "1990-01-02",
-      "workouts": [1, 7],
-      "editable": false
-    },
+      "id":2,
+      "date_completed":"2017-02-22",
+      "workout":{
+        "id":11,
+        "name":"Anaerobic1221",
+        "athletes":[5,6],
+      },
+      "athlete":{
+        "id":6,
+        "given_name":"Kate",
+        "surname":"Tufts",
+        "date_of_birth":"1993-01-16",
+        "workouts":[11],
+        "editable":false,
+      },
+    }
   ]
 }
 ```
 If a `user` is logged in, then `index` will return `editable` as true for that user's athlete.
 
+#### update
+
+The `update` action is a *PATCH* that updates a logged workout for a user who has authorization. It expects a PATCH of `log` specifying `date_completed` and `workout_id`. The user's id number automatically is assigned to `athlete_id`.
+
+If the request is successful, the response will have an HTTP status of 204 No Content.
+
+If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
+
+#### destroy
+
+The `destroy` action is a *DELETE* that deletes a logged workout for a user who has authorization.
+
+If the request is successful, the response will have an HTTP status of 204 No Content.
+
+If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
 
 ## [License](LICENSE)
 
