@@ -10,7 +10,6 @@ An API to store workout data and allow athletes to register as users and record 
 | POST   | `/sign-in`             | `users#signin`    |
 | PATCH  | `/change-password/:id` | `users#changepw`  |
 | DELETE | `/sign-out/:id`        | `users#signout`   |
-| POST   | `/athletes`             | `athletes#signup`    |
 | PATCH  | `/athletes/:id` | `athletes#update`  |
 | GET | `/athletes/:id`        | `athletes#show`   |
 | GET   | `/athletes`             | `athletes#index`    |
@@ -32,6 +31,18 @@ An API to store workout data and allow athletes to register as users and record 
 
 #### POST /sign-up
 
+The `create` action expects a *POST* of `credentials` and `athlete` information identifying a new user and athlete-profile to create, in this case using `getFormFields`:
+
+```html
+<form>
+  <input name="credentials[email]" type="text" value="la@example.email">
+  <input name="credentials[password]" type="password" value="an example password">
+  <input name="credentials[password_confirmation]" type="password" value="an example password">
+  <input name="athlete[given_name]" type="text" value="lauren">
+  <input name="athlete[surname]" type="text" value="p">
+  <input name="athlete[date_of_birth]" type="date" value="1990-01-01">
+</form>
+```
 Request:
 
 ```sh
@@ -44,12 +55,17 @@ curl http://localhost:4741/sign-up \
       "email": "'"${EMAIL}"'",
       "password": "'"${PASSWORD}"'",
       "password_confirmation": "'"${PASSWORD}"'"
+    },
+    "athlete": {
+      "given_name": "'"${GIVEN_NAME}"'",
+      "surname": "'"${SURNAME}"'",
+      "date_of_birth": "'"${DOB}"'"
     }
   }'
 ```
 
 ```sh
-EMAIL=ava@bob.com PASSWORD=hannah scripts/sign-up.sh
+EMAIL=laur@en.com PASSWORD=lauren GIVEN_NAME=lauren SURNAME=p DOB=1993-01-16 scripts/sign-in.sh
 ```
 
 Response:
@@ -61,7 +77,7 @@ Content-Type: application/json; charset=utf-8
 {
   "user": {
     "id": 1,
-    "email": "ava@bob.com"
+    "email": "laur@en.com"
   }
 }
 ```
@@ -84,7 +100,7 @@ curl http://localhost:4741/sign-in \
 ```
 
 ```sh
-EMAIL=ava@bob.com PASSWORD=hannah scripts/sign-in.sh
+EMAIL=laur@en.com PASSWORD=lauren scripts/sign-in.sh
 ```
 
 Response:
@@ -96,7 +112,7 @@ Content-Type: application/json; charset=utf-8
 {
   "user": {
     "id": 1,
-    "email": "ava@bob.com",
+    "email": "laur@en.com",
     "token": "BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f"
   }
 }
@@ -119,7 +135,7 @@ curl --include --request PATCH "http://localhost:4741/change-password/$ID" \
 ```
 
 ```sh
-ID=1 OLDPW=hannah NEWPW=elle TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/change-password.sh
+ID=1 OLDPW=lauren NEWPW=queen TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/change-password.sh
 ```
 
 Response:
@@ -140,7 +156,7 @@ curl http://localhost:4741/sign-out/$ID \
 ```
 
 ```sh
-ID=1 TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/sign-out.sh
+ID=1 TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f ID=1 scripts/sign-out.sh
 ```
 
 Response:
@@ -201,7 +217,7 @@ curl --include --request GET http://localhost:4741/users/$ID \
 ```
 
 ```sh
-ID=2 TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/user.sh
+ID=2 TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f ID=1 scripts/user.sh
 ```
 
 Response:
@@ -212,8 +228,8 @@ Content-Type: application/json; charset=utf-8
 
 {
   "user": {
-    "id": 2,
-    "email": "bob@ava.com"
+    "id": 1,
+    "email": "laur@en.com"
   }
 }
 ```
