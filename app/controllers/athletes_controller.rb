@@ -1,30 +1,7 @@
 # frozen_string_literal: true
 
 class AthletesController < OpenReadController
-  before_action :set_athlete, only: [:update, :destroy]
-
-  # GET /athletes
-  def index
-    @athletes = Athlete.all
-
-    render json: @athletes
-  end
-
-  # GET /athletes/1
-  def show
-    render json: Athlete.find(params[:id])
-  end
-
-  # POST /athletes
-  # def create
-  #   @athlete = current_user.build_athlete(athlete_params)
-  #
-  #   if @athlete.save
-  #     render json: @athlete, status: :created
-  #   else
-  #     render json: @athlete.errors, status: :unprocessable_entity
-  #   end
-  # end
+  before_action :set_athlete, only: [:update]
 
   # PATCH/PUT /athletes/1
   def update
@@ -33,11 +10,6 @@ class AthletesController < OpenReadController
     else
       render json: @athlete.errors, status: :unprocessable_entity
     end
-  end
-
-  # DELETE /athletes/1
-  def destroy
-    @athlete.destroy
   end
 
   # Use callbacks to share common setup or constraints between actions.
