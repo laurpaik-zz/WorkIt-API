@@ -12,7 +12,9 @@ class LogsController < OpenReadController
 
   # GET /logs/1
   def show
-    render json: Log.find(params[:id])
+    # render json: Log.find(params[:id])
+    @logs = Log.where(athlete_id: current_user.id)
+    render json: @logs
   end
 
   # POST /logs
