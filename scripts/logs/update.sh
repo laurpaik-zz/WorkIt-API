@@ -9,7 +9,8 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Token token=$TOKEN" \
   --data '{
     "log": {
-      "date_completed": "'"${DATE}"'"
+      "date_completed": "'"${DATE}"'",
+      "workout_id": "'"${WORKOUT_ID}"'"
     }
   }'
 
