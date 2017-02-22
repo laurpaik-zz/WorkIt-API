@@ -228,7 +228,7 @@ Content-Type: application/json; charset=utf-8
 }
 ```
 
-### Athlete actions
+### Athlete Actions
 
 All athlete action requests must include a valid HTTP header `Authorization: Token token=<token>` or they will be rejected with a status of 401 Unauthorized.
 
@@ -240,7 +240,7 @@ If the request is successful, the response will have an HTTP status of 204 No Co
 
 If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
 
-### Log actions
+### Log Actions
 
 All log action requests except `index` must include a valid HTTP header `Authorization: Token token=<token` or they will be rejected with a status of 401 Unauthorized.
 
@@ -329,6 +329,29 @@ The `destroy` action is a *DELETE* that deletes a logged workout for a user who 
 If the request is successful, the response will have an HTTP status of 204 No Content.
 
 If the request is unsuccessful, the response will have an HTTP status of 400 Bad Request.
+
+### Workout Actions
+
+#### index
+
+The `index` action is a *GET* that retrieves all workouts.
+The response body will contain JSON containing an array of workouts, e.g.:
+```json
+{
+  "workouts":[
+    {
+      "id":1,
+      "name":"Benchmark2k",
+      "athletes":[5],
+    },
+    {
+      "id":2,
+      "name":"Benchmark5k",
+      "athletes":[3,8]
+    }
+  ]
+}
+```
 
 ## [License](LICENSE)
 
