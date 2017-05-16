@@ -20,7 +20,7 @@ class LogsController < OpenReadController
 
   # POST /logs
   def create
-    @log = current_user.logs.build(log_params)
+    @log = current_user.athlete.logs.build(log_params)
 
     if @log.save
       render json: @log, status: :created
